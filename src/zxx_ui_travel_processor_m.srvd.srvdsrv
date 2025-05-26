@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service definition travel proc managed'
+define service ZXX_UI_TRAVEL_PROCESSOR_M {
+  expose ZXX_C_TRAVEL_M_PROCESSOR;
+  expose ZXX_C_BOOKING_M_PROCESSOR;
+}

@@ -1,0 +1,73 @@
+managed implementation in class zbp_xx_r_travel_m unique;
+strict ( 2 );
+
+define behavior for ZXX_R_TRAVEL_M alias Travel
+implementation in class zbp_xx_r_travel_m unique
+persistent table zxx_travel_m
+lock master
+authorization master ( global )
+etag master LastChangedAt
+early numbering
+{
+  create;
+  update;
+  delete;
+  association _BOOKING { create ;  }
+
+  field( readonly ) travelId;
+  field( mandatory: create ) CustomerId;
+
+  determination calculateTotalPrice on modify { field BookingFee;}
+  validation validateDates on save { field BeginDate, EndDate;}
+  action ( features : instance ) acceptTravel result [1] $self;
+  action deductDiscount parameter ZXX_A_DISCOUNT result [1] $self;
+
+
+  mapping for ZXX_TRAVEL_M corresponding {
+  AgencyId = agency_id;
+  TravelId = travel_id;
+  BeginDate = begin_date;
+  BookingFee = booking_fee;
+  CreatedAt = created_at;
+  CreatedBy = created_by;
+  CurrencyCode = currency_code;
+  CustomerId = customer_id;
+  Description = description;
+  EndDate = end_date;
+  LastChangedAt = last_changed_at;
+  LastChangedBy = last_changed_by;
+  OverallStatus = overall_status;
+  TotalPrice = total_price;
+  }
+}
+
+define behavior for ZXX_R_BOOKING_M alias Booking
+implementation in class zbp_xx_r_booking_m unique
+persistent table zxx_booking_m
+lock dependent by _Travel
+authorization dependent by _Travel
+etag master last_changed_at
+{
+  update;
+  delete;
+  field ( readonly ) Travel_Id;
+  field( readonly: update ) Booking_Id;
+
+  association _Travel;
+  association _BookSupplement { create; }
+}
+
+define behavior for ZXX_R_BOOKSUPPL_M alias BookSuppl
+implementation in class zbp_xx_r_bookSuppl_m unique
+persistent table zxx_book_supp_m
+lock dependent by _Travel
+authorization dependent by _Travel
+etag master last_changed_at
+{
+  update;
+  delete;
+  field ( readonly ) Travel_Id, Booking_Id;
+  field( readonly: update ) Booksupp_Id;
+  association _Travel;
+  association _Booking;
+}
