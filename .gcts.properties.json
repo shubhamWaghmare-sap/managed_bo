@@ -1,0 +1,14 @@
+{
+  "name": "_itapc1_i517012",
+  "version": "1.0.0",
+  "description": "_ITAPC1_I517012",
+  "repositoryLayout": {
+    "formatVersion": 6,
+    "format": "json",
+    "metaInformation": ".gctsmetadata/",
+    "tableContent": "true",
+    "readableSource": "false",
+    "keepClient": "false",
+    "fingerprintSeckey": "/BYOG/FPRINT_RT/8AF0DC4C34021FE098AC64914F669641_0"
+  }
+}
